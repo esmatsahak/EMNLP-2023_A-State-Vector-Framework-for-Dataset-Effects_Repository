@@ -1,0 +1,20 @@
+#%Module1.0#####################################################################
+##
+##  nlp_env modulefile
+##
+##
+proc ModulesHelp { } {
+    global version
+
+    puts stderr "\tSet computing environment to use ~/.conda/envs/nlp_env"
+    puts stderr "\n\tVersion $version\n"
+}
+
+module-whatis   "set enviroment for using ~/.conda/envs/nlp_env"
+
+# for Tcl script use only
+set version 1.0.0
+
+prepend-path    PATH    /h/sahakesm/.conda/envs/nlp_env/bin
+prepend-path    PYTHONPATH  /h/sahakesm/.conda/envs/nlp_env/bin/python
+prepend-path    LD_LIBRARY_PATH /pkgs/cuda-10.0/lib64:/pkgs/cudnn-10.0-v7.6.3.30/lib64
