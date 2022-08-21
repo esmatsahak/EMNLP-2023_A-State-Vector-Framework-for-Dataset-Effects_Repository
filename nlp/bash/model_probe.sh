@@ -10,7 +10,7 @@
 #SBATCH --open-mode=append
 
 . /etc/profile.d/lmod.sh  
-module use $HOME/env_scripts
+module use $HOME/multitask_nlp_project/env_scripts
 module load nlp_module
 hostname
 python ../py_scripts/senteval_probing.py $id $seed $encoder $model
