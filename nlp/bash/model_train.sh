@@ -4,14 +4,15 @@
 #SBATCH -c 2 
 #SBATCH --mem=32G 
 #SBATCH --gres=gpu:1
-#SBATCH --output=../logs/%x.log
+#SBATCH --output=../logs/%j.log
 #SBATCH --qos=normal
 #SBATCH --ntasks=1 
 #SBATCH --open-mode=append
 
-. /etc/profile.d/lmod.sh  
-module use $HOME/multitask_nlp_project/env_scripts
-module load nlp_module
-hostname
-python ../py_scripts/multitask_nlp_train.py $id $seed $encoder $model 
 
+. /etc/profile.d/lmod.sh  
+module use $HOME/env_scripts
+module load transformers4 
+hostname
+
+python ../py_scripts/multitask_nlp_train.py $1 $2 roberta roberta-base 

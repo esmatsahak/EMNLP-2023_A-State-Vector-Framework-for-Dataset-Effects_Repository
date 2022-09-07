@@ -20,6 +20,8 @@ import argparse
 from tqdm import tqdm
 from functools import partialmethod
 import shutil
+from pathlib import Path
+from utils import init_or_resume_wandb_run
 
 tqdm.__init__ = partialmethod(tqdm.__init__, disable=True)
 
@@ -282,8 +284,9 @@ output_dir = f"{exp_dir}/checkpoints"
 if not os.path.isdir(exp_dir):
     os.makedirs(exp_dir)
  
-wandb.login(key="4579cc2ec3bcbfd7de749970537a0ced71f36121")
-wandb.init(dir=exp_dir, project="multitask_nlp", entity="esmatsahak", group=f"{encoder}_{seed}", name=f"exp {exp_id}", resume=True, id=f"{encoder}_{seed}_{exp_id}_{job_id}")
+# wandb.login(key="4579cc2ec3bcbfd7de749970537a0ced71f36121")
+# wandb.init(dir=exp_dir, project="multitask_nlp", entity="ziningzhu", group=f"{encoder}_{seed}", name=f"exp {exp_id}", resume=True, id=f"{encoder}_{seed}_{exp_id}_{job_id}")
+cfg = init_or_resume_wandb_run(exp_dir, Path(exp_dir, "wandb_run_id.txt"), project_name="multitask_nlp", entity="ziningzhu", run_name=f"exp {exp_id}")
 
 tasks = []
 for i in range(len(exp)):
