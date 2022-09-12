@@ -1,0 +1,9 @@
+{
+    "cola": {
+        "matthews_correlation": 0.4657800904528511
+    },
+    "stsb": {
+        "pearson": 0.8196154254357736,
+        "spearmanr": 0.8190626623805982
+    }
+}
