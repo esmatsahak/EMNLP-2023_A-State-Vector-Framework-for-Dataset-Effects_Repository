@@ -1,0 +1,56 @@
+{
+    "Length": {
+        "devacc": 50.4,
+        "acc": 51.2,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "Depth": {
+        "devacc": 28.7,
+        "acc": 25.8,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "TopConstituents": {
+        "devacc": 57.9,
+        "acc": 53.8,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "BigramShift": {
+        "devacc": 81.6,
+        "acc": 79.9,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "Tense": {
+        "devacc": 88.1,
+        "acc": 86.2,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "SubjNumber": {
+        "devacc": 81.4,
+        "acc": 78.2,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "ObjNumber": {
+        "devacc": 71.8,
+        "acc": 74.0,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "OddManOut": {
+        "devacc": 64.3,
+        "acc": 60.6,
+        "ndev": 1000,
+        "ntest": 1000
+    },
+    "CoordinationInversion": {
+        "devacc": 70.6,
+        "acc": 62.6,
+        "ndev": 1000,
+        "ntest": 1000
+    }
+}

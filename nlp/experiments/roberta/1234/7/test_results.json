@@ -1,0 +1,8 @@
+{
+    "cola": {
+        "matthews_correlation": 0.5458659332756756
+    },
+    "sst2": {
+        "accuracy": 0.9139908256880734
+    }
+}
