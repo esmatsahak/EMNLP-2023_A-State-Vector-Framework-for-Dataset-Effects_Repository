@@ -9,6 +9,7 @@ import torch
 import transformers
 import argparse
 import json
+from pathlib import Path 
 
 PATH_TO_SENTEVAL = '../SentEval'
 PATH_TO_DATA = '../SentEval/data'
@@ -22,7 +23,7 @@ parser.add_argument("seed", type=int, choices=[42,1,1234,123,10], help="random s
 parser.add_argument("enc", type=str, choices=["bert", "roberta"], help="encoder")
 parser.add_argument("model", type=str, choices=['bert-base-cased', "roberta-base"], help="model name")
 args = parser.parse_args()
-
+print(args)
 exp_id = args.exp_id
 seed = args.seed
 encoder = args.enc
@@ -46,7 +47,11 @@ def batcher(params, batch):
     return embeddings
 
 tokenizer = transformers.AutoTokenizer.from_pretrained(model_name)
-model = transformers.AutoModel.from_pretrained(f"{exp_dir}/encoder")
+if exp_id == 0:
+    model = transformers.AutoModel.from_pretrained(args.model)
+    os.makedirs(f"../experiments/{encoder}/{seed}/{exp_id}")
+else:
+    model = transformers.AutoModel.from_pretrained(f"{exp_dir}/encoder")
 
 params = {'task_path': PATH_TO_DATA, 'usepytorch': True, 'kfold': 10} # usepytorch=False
 params['classifier'] = {'nhid': 0, 'optim': 'adam', 'batch_size': 64, 'tenacity': 5, 'epoch_size': 4}
@@ -56,7 +61,19 @@ logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.DEBUG)
 if __name__ == "__main__":
     se = senteval.engine.SE(params, batcher, prepare)
     transfer_tasks = ['Length', 'Depth', 'TopConstituents','BigramShift', 'Tense', 'SubjNumber', 'ObjNumber', 'OddManOut', 'CoordinationInversion']
-    results = se.eval(transfer_tasks)
+    results = {}
+    for task in transfer_tasks:
+        checkpoint = Path(exp_dir, f"{task}_checkpoint.txt")
+        if not checkpoint.exists():
+            result = se.eval(task)
+            checkpoint.write_text(json.dumps(result))
+            print ("Computed probing for task {}".format(task))
+        else:
+            print ("Found checkpoint at {}".format(checkpoint.name))
+            result = json.loads(checkpoint.read_text())
+        results[task] = result
     print(results)
     with open(f"{exp_dir}/probe_results.json", "w") as write_file:
         json.dump(results, write_file, indent=4)
+    for task in transfer_tasks:
+        Path(exp_dir, f"{task}_checkpoint.txt").unlink()

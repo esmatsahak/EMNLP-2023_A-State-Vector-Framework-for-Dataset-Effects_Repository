@@ -241,7 +241,7 @@ parser.add_argument("seed", type=int, choices=[42,1,1234,123,10])
 parser.add_argument("enc", type=str, choices=['bert', "roberta"], help='encoder')
 parser.add_argument("model", type=str, choices=['bert-base-cased', "roberta-base"], help="model name")
 args = parser.parse_args()
-
+print(args)
 exp_id = args.exp_id
 encoder = args.enc
 model_name = args.model
@@ -409,8 +409,8 @@ else:
     trainer.train(resume_from_checkpoint=True)
 
 wandb.finish()
-shutil.rmtree(f"{exp_dir}/wandb")
-shutil.rmtree(output_dir)
+shutil.rmtree(f"{exp_dir}/wandb", ignore_errors=True)
+shutil.rmtree(output_dir, ignore_errors=True)
 
 multitask_model.encoder.save_pretrained(f"{exp_dir}/encoder")
 
